@@ -44,7 +44,7 @@ public class ParseUtil {
         String hex="5BAC3F40";
         System.out.println("\n***** 16进制转换为ASCII *****");
         System.out.println("Hex : " + hex);
-        System.out.println("ASCII : " + strToHex.convertHexToString(hex));   //适用于大部分的字段解码方式
+        System.out.println("ASCII : " + convertHexToString(hex));   //适用于大部分的字段解码方式
 
 
         String s = "000000005BAC4D50";
