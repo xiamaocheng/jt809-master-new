@@ -57,7 +57,7 @@ public class ParseUtil {
 //
 //    }
 
-    private static void decodeTime( String s ) {
+    public  static void decodeTime( String s ) {
 
         long longVaue = new BigInteger(s, 16).longValue();
 

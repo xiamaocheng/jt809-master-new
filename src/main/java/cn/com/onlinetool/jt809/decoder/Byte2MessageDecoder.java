@@ -4,8 +4,10 @@ package cn.com.onlinetool.jt809.decoder;
 import cn.com.onlinetool.jt809.constants.JT809MessageConstants;
 import cn.com.onlinetool.jt809.util.ByteArrayUtil;
 import cn.com.onlinetool.jt809.util.PacketUtil;
+import cn.com.onlinetool.jt809.util.ParseUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -136,7 +138,62 @@ public class Byte2MessageDecoder {
 
         //还有完整数据包 递归调用
 //        this.parseAndPushData(ctx, channelKey, index, readDatas);
+        parsePkt(data);
 
 
+    }
+
+    private void parsePkt(byte[] data) {
+        // begin 这里提供方法可供入库使用，根据不同的业务进行字段分段截取.默认解析字段分别是业务字段的含义字段
+
+        String parseData = ByteArrayUtil.bytes2HexStr(data);
+
+        //比如这里增加子业务类型的字段数据：
+        if(StringUtil.isNullOrEmpty(parseData)){
+             log.info("数据为空");
+             return;
+        }else {
+            //数据头
+            String  head = parseData.substring(0, 2); //--头标识
+            String  datalength=parseData.substring(2,10);//--数据头->数据长度
+            String  dataSeqNo=parseData.substring(10,18);// --数据头->报文序列号
+            String  bizdata=parseData.substring(18,22);// --数据头->业务数据类型
+            String  code=parseData.substring(22,30); //--数据头->下级平台接入码，上级平台给下级平台分配唯一标识码
+            String version=parseData.substring(30,36); //--数据头->协议版本号标识
+            String entryFlag=parseData.substring(36,38);//--数据头->报文加密标识位
+            String key=parseData.substring(38,46);//--数据头->数据加密的密匙
+
+            //数据体
+//            String chepaiHao=parseData.substring(46,50);// --数据体->车牌号
+//            String color=parseData.substring(50,52); // --数据体->车辆颜色   //这2者没有
+            String biz =parseData.substring(46,50); //--数据体->子业务类型标识
+            String lastlength=parseData.substring(50,58);//--数据体->后续数据长度，这里的确是24 位 ，数据长度24位
+
+            //子数据体
+            String subData=parseData.substring(58,82); //参看4.5.8.1 车辆定位信息数据体
+
+            //3.CRC
+            String crc=parseData.substring(82,86);  //这个每次都变化的
+            String tail=parseData.substring(86,88);
+
+
+
+
+
+            //2.业务数据体这里调用Parse方法，可以封装对应的实体bean,供入库用，提供int ,varchar,time 三种格式进行
+            log.info("总长度是：{}"+subData);
+
+
+
+
+
+
+
+
+
+        }
+
+
+        //end
     }
 }
