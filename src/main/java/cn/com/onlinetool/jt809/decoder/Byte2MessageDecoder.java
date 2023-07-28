@@ -99,15 +99,15 @@ public class Byte2MessageDecoder {
 
         byte[] data = ByteArrayUtil.subBytes(readDatas, index, readDatas.length - index);
 
-//        //整包长度
-//        int packetLen = PacketUtil.getPacketLen(data);
-//        index += packetLen;
-//
-//        //一个完整包
-//        byte[] fullPacket = ByteArrayUtil.subBytes(data, 0, packetLen);
-//        log.info("拆包后的单包数据 --> fullPacket : {}", ByteArrayUtil.bytes2HexStr(fullPacket));
+        //整包长度
+        int packetLen = PacketUtil.getPacketLen(data);
+        index += packetLen;
 
-        log.info("拆包后的单包数据 --> fullPacket : {}", ByteArrayUtil.bytes2HexStr(data));
+        //一个完整包
+        byte[] fullPacket = ByteArrayUtil.subBytes(data, 0, packetLen);
+        log.info("拆包后的单包数据 --> fullPacket : {}", ByteArrayUtil.bytes2HexStr(fullPacket));
+
+//        log.info("拆包后的单包数据 --> fullPacket : {}", ByteArrayUtil.bytes2HexStr(data));
 
 //        //验证数据包有效性
 //        if (!PacketUtil.checkPacket(fullPacket)) {
@@ -118,12 +118,12 @@ public class Byte2MessageDecoder {
 //        ctx.fireChannelRead(PacketUtil.bytes2Message(fullPacket));
 //
 //        //剩余长度
-//        int remainingLen = data.length - packetLen;
+        int remainingLen = data.length - packetLen;
 
         //没有数据，结束
-//        if (remainingLen < 1) {
-//            return;
-//        }
+        if (remainingLen < 1) {
+            return;
+        }
 //
 //        //剩余数据长度小于一包数据的最小长度，缓存数据
 //        if (remainingLen < JT809MessageConstants.MSG_MIN_LEN) {
@@ -145,14 +145,17 @@ public class Byte2MessageDecoder {
 //        this.parseAndPushData(ctx, channelKey, index, readDatas);
 
 
-        JT809Packet0x1202Decoder jt809Packet0x1202Decoder=new JT809Packet0x1202Decoder();  //todo 这里使用factory 模式抽取
-        JT809Packet0x1202 packet = jt809Packet0x1202Decoder.decoder(data);
+
+
+
+//        JT809Packet0x1202Decoder jt809Packet0x1202Decoder=new JT809Packet0x1202Decoder();  //todo 这里使用factory 模式抽取
+//        JT809Packet0x1202 packet = jt809Packet0x1202Decoder.decoder(data);
 
 
 //        parsePkt(data);
 
         //4.入库操作，这里的web 层做展示而已
-         JT809Dao.insert0x1202(packet);      //todo 三层模式分解
+//         JT809Dao.insert0x1202(packet);      //todo 三层模式分解
 
 
 
