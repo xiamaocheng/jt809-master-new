@@ -149,6 +149,11 @@ public class Byte2MessageDecoder {
 
     }
 
+
+    /***
+     *    ACSII 下解析方式
+     * @param data
+     */
     private void parsePkt(byte[] data) {
         // begin 这里提供方法可供入库使用，根据不同的业务进行字段分段截取.默认解析字段分别是业务字段的含义字段
 

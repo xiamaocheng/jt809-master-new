@@ -42,7 +42,7 @@ public class StringToHex{
     }
 
     //504F533838383834  POS88884
-    public static void main1(String[] args) {
+    public static void main(String[] args) {
 
         StringToHex strToHex = new StringToHex();
 //        System.out.println("\n-----ASCII码转换为16进制 -----");
@@ -53,14 +53,14 @@ public class StringToHex{
 
 //        String hex="3132333435363738393031000000000000000000";
 //        String hex="3132333435364071712E636F6D";
-        String hex="5BAC3F40";
+        String hex="63E5A282B2E2413838383838";
         System.out.println("\n***** 16进制转换为ASCII *****");
         System.out.println("Hex : " + hex);
         System.out.println("ASCII : " + strToHex.convertHexToString(hex));
     }
 
 
-    public static void main(String[] args) {
+    public static void main2(String[] args) {
         String s = "000000005BAC4D50";
         long longVaue = new BigInteger(s, 16).longValue();
 
