@@ -145,12 +145,15 @@ public class Byte2MessageDecoder {
 //        this.parseAndPushData(ctx, channelKey, index, readDatas);
 
 
-        JT809Packet0x1202Decoder jt809Packet0x1202Decoder=new JT809Packet0x1202Decoder();
+        JT809Packet0x1202Decoder jt809Packet0x1202Decoder=new JT809Packet0x1202Decoder();  //todo 这里使用factory 模式抽取
         JT809Packet0x1202 packet = jt809Packet0x1202Decoder.decoder(data);
+
+
 //        parsePkt(data);
 
         //4.入库操作，这里的web 层做展示而已
-        JT809Dao.insert0x1202(packet);
+         JT809Dao.insert0x1202(packet);      //todo 三层模式分解
+
 
 
 

@@ -19,7 +19,7 @@ import java.util.UUID;
 public class JT809Dao {
     private static Logger log = LoggerFactory.getLogger(JT809Dao.class);
 
-    public static int insert0x1202(JT809Packet0x1202 packet) {
+    public static int insert0x1202(JT809Packet0x1202 packet) throws SQLException {
         QueryRunner runner = new QueryRunner();
         Connection conn = DataSourceConnectionFactory.getDbConnection();
         String sql = "insert into test.bus_gps(id,vehicleno,lon,lat,sendtime,cjsj,vec1,vec2,vec3,direction,altitude,alarm)values(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -28,6 +28,8 @@ public class JT809Dao {
             insert = runner.update(conn, sql, UUID.randomUUID().toString().replace("-",""), packet.getVehicleNo().replaceAll("\u0000", ""), String.format("%.6f",packet.getLon() * 1e-6), String.format("%.6f",packet.getLat() * 1e-6),LocalDateTime.of(packet.getDate(), packet.getTime()),LocalDateTime.now(),packet.getVec1(),packet.getVec2(),packet.getVec3(),packet.getDirection(),packet.getAltitude(),packet.getAlarm());
         } catch (SQLException e) {
             log.info("数据存储错误：{}",e.getMessage());
+        }finally {
+            conn.close();
         }
         return insert;
     }
