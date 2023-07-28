@@ -40,7 +40,7 @@ public class JT809Packet0x1202Decoder {
         // 车牌号
         byte [] vehicleNoBytes = new byte[21];
         msgBodyBuf.readBytes(vehicleNoBytes);
-        packet.setVehicleNo(new String(vehicleNoBytes, Charset.forName("GBK")));
+        packet.setVehicleNo(new String(vehicleNoBytes, Charset.forName("utf-8")));
         // 车辆颜色
         packet.setVehicleColor(msgBodyBuf.readByte());
         // 子业务类型标识
@@ -51,6 +51,9 @@ public class JT809Packet0x1202Decoder {
 //        }
         // 后续数据长度
         packet.setDataLength(msgBodyBuf.readInt());
+
+
+
         // 经纬度信息是否按国标进行加密
         packet.setExcrypt(msgBodyBuf.readByte());
         if (packet.getExcrypt() == Const.EncryptFlag.YES ){
@@ -60,8 +63,8 @@ public class JT809Packet0x1202Decoder {
 //        msgBodyBuf.skipBytes(7);
         int day = Byte.toUnsignedInt(msgBodyBuf.readByte());
         int month = Byte.toUnsignedInt(msgBodyBuf.readByte());
-        packet.setDate(LocalDate.of(msgBodyBuf.readShort(),month,day));
-        packet.setTime(LocalTime.of(Byte.toUnsignedInt(msgBodyBuf.readByte()),Byte.toUnsignedInt(msgBodyBuf.readByte()),Byte.toUnsignedInt(msgBodyBuf.readByte())));
+//        packet.setDate(LocalDate.of(msgBodyBuf.readShort(),month,day));
+//        packet.setTime(LocalTime.of(Byte.toUnsignedInt(msgBodyBuf.readByte()),Byte.toUnsignedInt(msgBodyBuf.readByte()),Byte.toUnsignedInt(msgBodyBuf.readByte())));
         // 经纬度
         packet.setLon(msgBodyBuf.readInt());
         packet.setLat(msgBodyBuf.readInt());
@@ -70,15 +73,15 @@ public class JT809Packet0x1202Decoder {
         // 行驶记录速度
         packet.setVec2(msgBodyBuf.readShort());
         // 车辆当前总里程数
-        packet.setVec3(msgBodyBuf.readInt());
-        // 方向
-        packet.setDirection(msgBodyBuf.readShort());
-        // 海拔
-        packet.setAltitude(msgBodyBuf.readShort());
-        // 车辆状态
-        packet.setState(msgBodyBuf.readInt());
-        // 报警状态
-        packet.setAlarm(msgBodyBuf.readInt());
+//        packet.setVec3(msgBodyBuf.readInt());
+//        // 方向
+//        packet.setDirection(msgBodyBuf.readShort());
+//        // 海拔
+//        packet.setAltitude(msgBodyBuf.readShort());
+//        // 车辆状态
+//        packet.setState(msgBodyBuf.readInt());
+//        // 报警状态
+//        packet.setAlarm(msgBodyBuf.readInt());
     }
 
 

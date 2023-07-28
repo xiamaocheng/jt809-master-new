@@ -2,6 +2,7 @@ package cn.com.onlinetool.jt809.decoder;
 
 
 import cn.com.onlinetool.jt809.constants.JT809MessageConstants;
+import cn.com.onlinetool.jt809.decoderDemo.JT809Packet0x1202Decoder;
 import cn.com.onlinetool.jt809.util.ByteArrayUtil;
 import cn.com.onlinetool.jt809.util.PacketUtil;
 import cn.com.onlinetool.jt809.util.ParseUtil;
@@ -90,7 +91,7 @@ public class Byte2MessageDecoder {
      * @param channelKey
      * @param readDatas
      */
-    private void parseAndPushData(ChannelHandlerContext ctx, String channelKey, int index, byte[] readDatas) {
+    private void parseAndPushData(ChannelHandlerContext ctx, String channelKey, int index, byte[] readDatas) throws Exception {
 
         byte[] data = ByteArrayUtil.subBytes(readDatas, index, readDatas.length - index);
 
@@ -138,7 +139,12 @@ public class Byte2MessageDecoder {
 
         //还有完整数据包 递归调用
 //        this.parseAndPushData(ctx, channelKey, index, readDatas);
-        parsePkt(data);
+
+
+        JT809Packet0x1202Decoder jt809Packet0x1202Decoder=new JT809Packet0x1202Decoder();
+        jt809Packet0x1202Decoder.decoder(data);
+//        parsePkt(data);
+
 
 
     }
@@ -181,7 +187,7 @@ public class Byte2MessageDecoder {
 
 
             //2.业务数据体这里调用Parse方法，可以封装对应的实体bean,供入库用，提供int ,varchar,time 三种格式进行
-            log.info("总长度是：{}"+subData);
+//            log.info("总长度是：{}"+subData);
 
 
 
