@@ -29,6 +29,7 @@ public class MessageForwardInboundHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         Message message = (Message)msg;
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>channelRead执行>>>>>>>>>>>>>>>>>>");
         if(null == handlerFactory.getHandler((int)message.getMsgHead().getMsgId())){
             log.warn("暂不支持此类型消息：" + ByteArrayUtil.short2HexStr(message.getMsgHead().getMsgId()));
             return;

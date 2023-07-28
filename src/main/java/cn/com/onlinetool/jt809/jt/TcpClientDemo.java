@@ -276,7 +276,7 @@ public class TcpClientDemo {
 //        awsVo.setVehicleNo("XXXXX");
         s.sendMsg2Gov(awsVo);
         try {
-            Thread.sleep(20*1000);
+            Thread.sleep(2*1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

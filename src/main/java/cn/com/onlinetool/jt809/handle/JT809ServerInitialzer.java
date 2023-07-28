@@ -22,7 +22,7 @@ public class JT809ServerInitialzer extends ChannelInitializer<NioSocketChannel> 
 //        ch.pipeline().addLast(new JT809AdapterHandle());
 //        ch.pipeline().addLast(new JT809DecoderAdapter());
 //        ch.pipeline().addLast(new JT809HeartbeatHandle());
-        ch.pipeline().addLast(new JT809LoginHandle());
+          ch.pipeline().addLast(new JT809LoginHandle());
 //        ch.pipeline().addLast(new JT809Packet0x1202Handle());
 //        ch.pipeline().addLast(new JT809EncodeAdapter());
     }

@@ -63,6 +63,7 @@ public class ServerByte2MessageInboundHandler extends ChannelInboundHandlerAdapt
         //计数器加1
         tcpChannelMsgManage.incrementTcpClientConnectNum();
         log.info("连接到新客户端，当前节点连接数 : {}", tcpChannelMsgManage.getTcpClientConnectNum());
+        ctx.channel().read();
         super.channelActive(ctx);
     }
 

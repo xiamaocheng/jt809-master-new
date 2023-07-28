@@ -1,6 +1,7 @@
 package cn.com.onlinetool.jt809.init;
 
 import cn.com.onlinetool.jt809.config.NettyConfig;
+import cn.com.onlinetool.jt809.handle.JT809LoginHandle;
 import cn.com.onlinetool.jt809.handler.inbound.ServerByte2MessageInboundHandler;
 import cn.com.onlinetool.jt809.handler.inbound.MessageForwardInboundHandler;
 import cn.com.onlinetool.jt809.handler.outbound.Message2ByteOutboundHandler;
@@ -33,8 +34,11 @@ public class JT809ServerChannelInit extends ChannelInitializer<SocketChannel> {
     @Override
     public void initChannel(SocketChannel socketChannel) throws Exception {
         socketChannel.pipeline().addLast(new IdleStateHandler(serverConfig.getReaderIdleTimeSeconds(),serverConfig.getWriterIdleTimeSeconds(),serverConfig.getAllIdleTimeSeconds(), TimeUnit.SECONDS));
+        socketChannel.pipeline().addLast(  new JT809LoginHandle());
         socketChannel.pipeline().addLast(message2ByteOutboundHandler);
         socketChannel.pipeline().addLast(serverByte2MessageInboundHandler);
         socketChannel.pipeline().addLast(messageForwardInboundHandler);
+
+
     }
 }

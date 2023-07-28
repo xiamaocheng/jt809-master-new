@@ -53,6 +53,7 @@ public class ClientByte2MessageInboundHandler extends ChannelInboundHandlerAdapt
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        ctx.channel().read();
         super.channelActive(ctx);
     }
 

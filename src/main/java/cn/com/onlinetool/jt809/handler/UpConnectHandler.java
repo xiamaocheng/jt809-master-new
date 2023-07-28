@@ -9,6 +9,7 @@ import cn.com.onlinetool.jt809.util.ByteArrayUtil;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -26,8 +27,8 @@ public class UpConnectHandler implements CommonHandler {
     TcpChannelMsgManage channelMsgManage;
 //    @Autowired
 //    KafkaTemplate<String,Object> kafkaTemplate;
-//    @Autowired
-//    TcpChannelMsgManage tcpChannelMsgManage;
+    @Autowired
+    TcpChannelMsgManage tcpChannelMsgManage;
 
     @Override
     public void handler(ChannelHandlerContext ctx, Message msg) {

@@ -2,6 +2,7 @@ package cn.com.onlinetool.jt809.server;
 
 import cn.com.onlinetool.jt809.config.BusinessConfig;
 import cn.com.onlinetool.jt809.config.NettyConfig;
+import cn.com.onlinetool.jt809.handle.JT809ServerInitialzer;
 import cn.com.onlinetool.jt809.init.JT809ClientChannelInit;
 import cn.com.onlinetool.jt809.init.JT809ServerChannelInit;
 import io.netty.bootstrap.Bootstrap;
@@ -56,10 +57,14 @@ public class JT809Server {
             serverBootstrap.channel(NioServerSocketChannel.class);
             serverBootstrap.handler(new LoggingHandler(LogLevel.INFO));
             //接收到的信息处理器
+            serverBootstrap .childHandler(new JT809ServerInitialzer());
             serverBootstrap.childHandler(JT809ServerChannelInit);
+
             serverBootstrap.option(ChannelOption.SO_BACKLOG,128);
             serverBootstrap.option(ChannelOption.TCP_NODELAY, true);
             serverBootstrap.childOption(ChannelOption.SO_KEEPALIVE,true);
+
+
             //ChannelFuture描述异步回调的处理操作
             ChannelFuture future = serverBootstrap.bind(serverConfig.getTcpPort()).sync();
 
