@@ -135,6 +135,7 @@ public class TcpClientDemo {
      * 2016年9月28日 by fox_mt
      */
     private Message buildSendVO(Idc2AwsGpsVo awsVo){
+        awsVo.setName("南京");
         Message msg = new Message(JT809Constants.UP_EXG_MSG);
         ChannelBuffer buffer = ChannelBuffers.buffer(36);
         //是否加密
