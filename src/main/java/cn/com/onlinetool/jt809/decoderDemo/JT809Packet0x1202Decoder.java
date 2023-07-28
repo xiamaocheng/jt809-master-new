@@ -21,21 +21,21 @@ import java.time.LocalTime;
 public class JT809Packet0x1202Decoder {
     private static Logger log = LoggerFactory.getLogger(JT809Packet0x1202Decoder.class);
 
-    public JT809BasePacket decoder(byte[] bytes) throws Exception {
+    public JT809Packet0x1202 decoder(byte[] bytes) throws Exception {
         JT809Packet0x1202 jt809Packet0x1202 = new JT809Packet0x1202();
         ByteBuf byteBuf = PacketDecoderUtils.baseDecoder(bytes, jt809Packet0x1202);
-        packetDecoder(byteBuf,jt809Packet0x1202);
-        return jt809Packet0x1202;
+        JT809Packet0x1202 pkt = packetDecoder(byteBuf, jt809Packet0x1202);
+        return pkt;
     }
 
-    private void packetDecoder(ByteBuf byteBuf, JT809Packet0x1202 packet) throws Exception{
+    private JT809Packet0x1202 packetDecoder(ByteBuf byteBuf, JT809Packet0x1202 packet) throws Exception{
         ByteBuf msgBodyBuf = null;
         if (packet.getEncryptFlag() == Const.EncryptFlag.NO) {
             msgBodyBuf = PacketDecoderUtils.getMsgBodyBuf(byteBuf);
         } else {
 
             msgBodyBuf = null;
-            return;
+
         }
         // 车牌号
         byte [] vehicleNoBytes = new byte[21];
@@ -54,6 +54,7 @@ public class JT809Packet0x1202Decoder {
 
 
 
+        //----------------------数据报文解析--------------------------------------
         // 经纬度信息是否按国标进行加密
         packet.setExcrypt(msgBodyBuf.readByte());
         if (packet.getExcrypt() == Const.EncryptFlag.YES ){
@@ -82,6 +83,9 @@ public class JT809Packet0x1202Decoder {
 //        packet.setState(msgBodyBuf.readInt());
 //        // 报警状态
 //        packet.setAlarm(msgBodyBuf.readInt());
+
+        return  packet;
+
     }
 
 

@@ -2,6 +2,9 @@ package cn.com.onlinetool.jt809.decoder;
 
 
 import cn.com.onlinetool.jt809.constants.JT809MessageConstants;
+import cn.com.onlinetool.jt809.db.JT809Dao;
+import cn.com.onlinetool.jt809.decoderDemo.JT809BasePacket;
+import cn.com.onlinetool.jt809.decoderDemo.JT809Packet0x1202;
 import cn.com.onlinetool.jt809.decoderDemo.JT809Packet0x1202Decoder;
 import cn.com.onlinetool.jt809.util.ByteArrayUtil;
 import cn.com.onlinetool.jt809.util.PacketUtil;
@@ -10,6 +13,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.core.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -142,8 +146,14 @@ public class Byte2MessageDecoder {
 
 
         JT809Packet0x1202Decoder jt809Packet0x1202Decoder=new JT809Packet0x1202Decoder();
-        jt809Packet0x1202Decoder.decoder(data);
+        JT809Packet0x1202 packet = jt809Packet0x1202Decoder.decoder(data);
 //        parsePkt(data);
+
+        //4.入库操作，这里的web 层做展示而已
+        JT809Dao.insert0x1202(packet);
+
+
+
 
 
 
@@ -186,25 +196,9 @@ public class Byte2MessageDecoder {
             //3.CRC
             String crc=parseData.substring(82,86);  //这个每次都变化的
             String tail=parseData.substring(86,88);
-
-
-
-
-
             //2.业务数据体这里调用Parse方法，可以封装对应的实体bean,供入库用，提供int ,varchar,time 三种格式进行
 //            log.info("总长度是：{}"+subData);
-
-
-
-
-
-
-
-
-
         }
-
-
         //end
     }
 }
