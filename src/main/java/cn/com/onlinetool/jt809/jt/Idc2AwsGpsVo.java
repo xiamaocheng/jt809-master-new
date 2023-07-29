@@ -5,9 +5,23 @@ public class Idc2AwsGpsVo {
     private int Direction;
     private int Lon;
 
-    private int Lat;
+    private Number Lat;
 
     private String name ;
+
+    private Number  code;
+
+    public void setLat(Number lat) {
+        Lat = lat;
+    }
+
+    public Number getCode() {
+        return code;
+    }
+
+    public void setCode(Number code) {
+        this.code = code;
+    }
 
     public String getName() {
         return name;
@@ -33,9 +47,9 @@ public class Idc2AwsGpsVo {
         Lon = lon;
     }
 
-    public int getLat() {
-        return Lat;
-    }
+//    public int getLat() {
+//        return Lat;
+//    }
 
     public void setLat(int lat) {
         Lat = lat;

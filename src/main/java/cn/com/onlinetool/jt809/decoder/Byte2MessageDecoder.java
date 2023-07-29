@@ -6,6 +6,8 @@ import cn.com.onlinetool.jt809.db.JT809Dao;
 import cn.com.onlinetool.jt809.decoderDemo.JT809BasePacket;
 import cn.com.onlinetool.jt809.decoderDemo.JT809Packet0x1202;
 import cn.com.onlinetool.jt809.decoderDemo.JT809Packet0x1202Decoder;
+import cn.com.onlinetool.jt809.decoderDemo2.JT809Packet0x0000;
+import cn.com.onlinetool.jt809.decoderDemo2.JT809Packet0x0000Decoder;
 import cn.com.onlinetool.jt809.util.ByteArrayUtil;
 import cn.com.onlinetool.jt809.util.PacketUtil;
 import cn.com.onlinetool.jt809.util.ParseUtil;
@@ -152,6 +154,15 @@ public class Byte2MessageDecoder {
 //        JT809Packet0x1202 packet = jt809Packet0x1202Decoder.decoder(data);
 
 
+
+          parsePktBypacket(data);
+
+        //        JT809Packet0x1202Decoder jt809Packet0x1202Decoder=new JT809Packet0x1202Decoder();  //todo 这里使用factory 模式抽取
+//        JT809Packet0x1202 packet = jt809Packet0x1202Decoder.decoder(data);
+
+
+
+
 //        parsePkt(data);
 
         //4.入库操作，这里的web 层做展示而已
@@ -163,6 +174,13 @@ public class Byte2MessageDecoder {
 
 
 
+    }
+
+    private void parsePktBypacket(byte[] data) throws Exception {
+
+        JT809Packet0x0000Decoder jt809Packet0x0000Decoder=new JT809Packet0x0000Decoder();
+        JT809Packet0x0000 packet = jt809Packet0x0000Decoder.decoder(data);
+        log.info("packet解析出"+packet.getCode());
     }
 
 

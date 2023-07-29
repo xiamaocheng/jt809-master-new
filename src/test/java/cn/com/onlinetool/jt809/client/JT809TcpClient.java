@@ -36,11 +36,11 @@ public class JT809TcpClient {
 
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new FixedLengthFrameDecoder(100));
+//                            socketChannel.pipeline().addLast(new FixedLengthFrameDecoder(100));
 
                             //自定义分隔符
-                            ByteBuf delimiter = Unpooled.copiedBuffer("11111".getBytes());
-                            socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,delimiter));
+//                            ByteBuf delimiter = Unpooled.copiedBuffer("11111".getBytes());
+//                            socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,delimiter));
 
                             socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
                             socketChannel.pipeline().addLast(new Message2ByteEncoder());

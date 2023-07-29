@@ -14,8 +14,16 @@ public class JT809TcpClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("channelActive..........");
+//        ctx.channel().write(ByteArrayUtil.hexStr2Bytes(
+//                "5B000000480000005210010001E24001000100000000000001E2407465737438303900312E37312E3132392E32303100000000000000000000000000000000000000004E8ED9BA5D\r\n"
+//
+//
+//        ));
+
         ctx.channel().write(ByteArrayUtil.hexStr2Bytes(
-                "5B000000480000005210010001E24001000100000000000001E2407465737438303900312E37312E3132392E32303100000000000000000000000000000000000000004E8ED9BA5D"
+                "123"
+
+
         ));
     }
 

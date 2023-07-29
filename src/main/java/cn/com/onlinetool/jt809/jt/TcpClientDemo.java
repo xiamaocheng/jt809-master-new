@@ -135,33 +135,64 @@ public class TcpClientDemo {
      * 2016年9月28日 by fox_mt
      */
     private Message buildSendVO(Idc2AwsGpsVo awsVo){
-        awsVo.setName("南京");
-        Message msg = new Message(JT809Constants.UP_EXG_MSG);
-        ChannelBuffer buffer = ChannelBuffers.buffer(36);
+//        awsVo.setName("南京");
+//        Message msg = new Message(JT809Constants.UP_EXG_MSG);
+        Message msg = new Message( );
+//        ChannelBuffer buffer = ChannelBuffers.buffer(36);
         //是否加密
-        buffer.writeByte((byte)0);//0未加密 // 1
-        //日月年dmyy
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        buffer.writeByte((byte)cal.get(Calendar.DATE));
-        buffer.writeByte((byte)(cal.get(Calendar.MONTH) + 1));
-        String hexYear = "0" + Integer.toHexString(cal.get(Calendar.YEAR));
-        buffer.writeBytes(hexStringToByte(hexYear));//4
+//        buffer.writeByte((byte)0);//0未加密 // 1
+//        //日月年dmyy
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(new Date());
+//        buffer.writeByte((byte)cal.get(Calendar.DATE));
+//        buffer.writeByte((byte)(cal.get(Calendar.MONTH) + 1));
+//        String hexYear = "0" + Integer.toHexString(cal.get(Calendar.YEAR));
+//        buffer.writeBytes(hexStringToByte(hexYear));//4
+//
+//        //时分秒
+//        buffer.writeByte((byte)cal.get(Calendar.HOUR_OF_DAY));
+//        buffer.writeByte((byte)cal.get(Calendar.MINUTE));
+//        buffer.writeByte((byte)cal.get(Calendar.SECOND));//3
+//        //经度，纬度
+//        buffer.writeInt(formatLonLat(awsVo.getLon()));//4
+//        buffer.writeInt(formatLonLat(awsVo.getLat()));//4
 
-        //时分秒
-        buffer.writeByte((byte)cal.get(Calendar.HOUR_OF_DAY));
-        buffer.writeByte((byte)cal.get(Calendar.MINUTE));
-        buffer.writeByte((byte)cal.get(Calendar.SECOND));//3
+//        //速度
+//        buffer.writeShort(awsVo.getSpeed().shortValue());//2
+//        //行驶记录速度
+//        buffer.writeShort(awsVo.getSpeed().shortValue());//2
+//        //车辆当前总里程数
+//        buffer.writeInt(awsVo.getMileage().intValue());//4
+//        //方向
+//        buffer.writeShort(awsVo.getDirection().shortValue());//2
+//        //海拔
+//        buffer.writeShort((short)0);//2
+//        //车辆状态
+//        int accStatus = null == awsVo.getAcc() ? 0 : awsVo.getAcc();
+//        int gpsStatus = null == awsVo.getGpsStatus() ? 0 : awsVo.getGpsStatus();
+//        if(accStatus == 0 && gpsStatus == 0){
+//            buffer.writeInt(0);//4
+//        }else if(accStatus == 1 && gpsStatus == 0){
+//            buffer.writeInt(1);//4
+//        }else if(accStatus == 0 && gpsStatus == 1){
+//            buffer.writeInt(2);//4
+//        }else{
+//            buffer.writeInt(3);//4
+//        }
+//        //报警状态
+//        buffer.writeInt(0);//0表示正常；1表示报警//4
+        ChannelBuffer headBuffer = ChannelBuffers.buffer(16);
+//        headBuffer.writeBytes(getBytesWithLengthAfter(21 , awsVo.getVehicleNo().getBytes(Charset.forName("GBK"))));//21
+//        headBuffer.writeByte((byte)InitVehicleData.vehicleColor(awsVo.getVehicleNo()));//1
+//        headBuffer.writeShort(JT809Constants.UP_EXG_MSG_REAL_LOCATION);//2
+//        headBuffer.writeInt(buffer.capacity());//4
+//        headBuffer.writeBytes(buffer);
+//        msg.setMsgBody(headBuffer);
 
-        //报警状态
-        buffer.writeInt(0);//0表示正常；1表示报警//4
-        ChannelBuffer headBuffer = ChannelBuffers.buffer(buffer.capacity() + 28);
+        headBuffer.writeShort((awsVo.getCode().intValue()));//2
+//        headBuffer.writeBytes((awsVo.getName().getBytes()));//2
 
-        headBuffer.writeShort(JT809Constants.UP_EXG_MSG_REAL_LOCATION);//2
-        headBuffer.writeInt(buffer.capacity());//4
-        headBuffer.writeBytes(buffer);
         msg.setMsgBody(headBuffer);
-
         return msg;
     }
 
@@ -269,9 +300,9 @@ public class TcpClientDemo {
     public static void main(String[] args) {
         TcpClientDemo s =  TcpClientDemo.getInstance();
         Idc2AwsGpsVo awsVo = new Idc2AwsGpsVo();
-        awsVo.setDirection(120);
-        awsVo.setLon(113);
-        awsVo.setLat(122);
+        awsVo.setCode(123);
+
+
 //        awsVo.setSpeed(45D);
 //        awsVo.setMileage(10001D);
 //        awsVo.setVehicleNo("XXXXX");
