@@ -189,8 +189,8 @@ public class TcpClientDemo {
 //        headBuffer.writeBytes(buffer);
 //        msg.setMsgBody(headBuffer);
 
-        headBuffer.writeShort((awsVo.getCode().intValue()));//2
-//        headBuffer.writeBytes((awsVo.getName().getBytes()));//2
+//        headBuffer.writeShort((awsVo.getCode().intValue()));//2
+        headBuffer.writeBytes((awsVo.getName().getBytes()));//2
 
         msg.setMsgBody(headBuffer);
         return msg;
@@ -300,7 +300,9 @@ public class TcpClientDemo {
     public static void main(String[] args) {
         TcpClientDemo s =  TcpClientDemo.getInstance();
         Idc2AwsGpsVo awsVo = new Idc2AwsGpsVo();
-        awsVo.setCode(123);
+//        awsVo.setCode(123);
+        awsVo.setName("张三");
+
 
 
 //        awsVo.setSpeed(45D);

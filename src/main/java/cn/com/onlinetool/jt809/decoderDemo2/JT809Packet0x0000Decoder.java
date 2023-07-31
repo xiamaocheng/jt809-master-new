@@ -44,14 +44,24 @@ public class JT809Packet0x0000Decoder {
 
 
         //----------------------数据报文解析--------------------------------------
-          msgBodyBuf.readByte();
-        packet.setCode( msgBodyBuf.readByte());
+
+        //1.解析数字
+//          msgBodyBuf.readByte();
+//        packet.setCode( msgBodyBuf.readByte());
 //        packet.setCode(msgBodyBuf.readInt());
+
+        //2.解析字符串
+        String  str = new String( msgBodyBuf.array());
+        packet.setName(str);
+
+
 
 
         return  packet;
 
     }
+
+
 
 
 
