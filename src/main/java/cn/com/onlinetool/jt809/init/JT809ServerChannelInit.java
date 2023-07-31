@@ -30,11 +30,15 @@ public class JT809ServerChannelInit extends ChannelInitializer<SocketChannel> {
     @Autowired
     Message2ByteOutboundHandler message2ByteOutboundHandler;
 
+    @Autowired
+    JT809LoginHandle jt809LoginHandle;
+
 
     @Override
     public void initChannel(SocketChannel socketChannel) throws Exception {
         socketChannel.pipeline().addLast(new IdleStateHandler(serverConfig.getReaderIdleTimeSeconds(),serverConfig.getWriterIdleTimeSeconds(),serverConfig.getAllIdleTimeSeconds(), TimeUnit.SECONDS));
         socketChannel.pipeline().addLast(  new JT809LoginHandle());
+        socketChannel.pipeline().addLast(  jt809LoginHandle);
         socketChannel.pipeline().addLast(message2ByteOutboundHandler);
         socketChannel.pipeline().addLast(serverByte2MessageInboundHandler);
         socketChannel.pipeline().addLast(messageForwardInboundHandler);

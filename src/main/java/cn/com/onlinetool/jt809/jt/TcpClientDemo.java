@@ -1,6 +1,11 @@
 package cn.com.onlinetool.jt809.jt;
 
-
+/***
+ * 这里使用对是netty3 的客户端的方式，在这里以后可能需要升级的问题
+ *  netty 4不与netty 3向后兼容，但如果“client”表示远程对等，则可以升级服务器并与客户端保持兼容。
+ *  客户端只是通过tcp堆栈与服务器通信，它不关心服务器的实现方式。
+ *
+ */
 
 import java.nio.charset.Charset;
 import java.text.NumberFormat;

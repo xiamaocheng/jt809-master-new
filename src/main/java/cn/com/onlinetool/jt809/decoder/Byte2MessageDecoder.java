@@ -155,15 +155,11 @@ public class Byte2MessageDecoder {
 
 
 
-          parsePktBypacket(data);
-
-        //        JT809Packet0x1202Decoder jt809Packet0x1202Decoder=new JT809Packet0x1202Decoder();  //todo 这里使用factory 模式抽取
-//        JT809Packet0x1202 packet = jt809Packet0x1202Decoder.decoder(data);
+          parsePktBypacket(data);//todo 这里使用factory 模式抽取,验证完毕
 
 
-
-
-//        parsePkt(data);
+        //1.第二种解析方法
+        //        parsePkt(data);
 
         //4.入库操作，这里的web 层做展示而已
 //         JT809Dao.insert0x1202(packet);      //todo 三层模式分解
@@ -181,7 +177,7 @@ public class Byte2MessageDecoder {
         JT809Packet0x0000Decoder jt809Packet0x0000Decoder=new JT809Packet0x0000Decoder();
         JT809Packet0x0000 packet = jt809Packet0x0000Decoder.decoder(data);
         //1.解析number 类型
-        log.info("packet解析出"+packet.getCode());
+//        log.info("packet解析出"+packet.getCode());
 
         //2.解析string 类型
         log.info("packet解析出"+packet.getName());

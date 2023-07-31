@@ -7,12 +7,9 @@ import java.util.Calendar;
 
 public class ParseUtil {
 
-
     public  static  String convertHexToString(String hex){
-
         StringBuilder sb = new StringBuilder();
         StringBuilder temp = new StringBuilder();
-
         //49204c6f7665204a617661 split into two characters 49, 20, 4c...
         for( int i=0; i<hex.length()-1; i+=2 ){
 
@@ -28,17 +25,14 @@ public class ParseUtil {
 
         return sb.toString();
     }
-
     //504F533838383834  POS88884
     public static void main(String[] args) {
-
         ParseUtil strToHex = new ParseUtil();
 //        System.out.println("\n-----ASCII码转换为16进制 -----");
 //        String str = "POS88884";
 //        System.out.println("字符串: " + str);
 //        String hex = strToHex.convertStringToHex(str);
 //        System.out.println("转换为16进制 : " + hex);
-
 //        String hex="3132333435363738393031000000000000000000";
 //        String hex="3132333435364071712E636F6D";
         String hex="5BAC3F40";

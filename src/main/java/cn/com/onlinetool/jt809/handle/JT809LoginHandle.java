@@ -4,10 +4,13 @@ import cn.com.onlinetool.jt809.decoderDemo.Const;
 import cn.com.onlinetool.jt809.packet.JT809LoginPacket;
 import cn.com.onlinetool.jt809.packet.JT809LoginResponsePacket;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: Xiuming Lee
@@ -15,6 +18,9 @@ import org.slf4j.LoggerFactory;
  * @Version 1.0
  * @Describe:
  */
+
+@Service
+@ChannelHandler.Sharable
 public class JT809LoginHandle extends SimpleChannelInboundHandler<JT809LoginPacket> {
     private static Logger log = LoggerFactory.getLogger(JT809LoginHandle.class);
 
