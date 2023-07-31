@@ -181,10 +181,16 @@ public class Byte2MessageDecoder {
         JT809Packet0x0000Decoder jt809Packet0x0000Decoder=new JT809Packet0x0000Decoder();
         JT809Packet0x0000 packet = jt809Packet0x0000Decoder.decoder(data);
         //1.解析number 类型
-//        log.info("packet解析出"+packet.getCode());
+        log.info("packet解析出"+packet.getCode());
 
         //2.解析string 类型
         log.info("packet解析出"+packet.getName());
+
+        log.info("packet解析出"+packet.getFlight());
+
+        log.info("packet解析出"+packet.getRemark());
+
+
 
     }
 

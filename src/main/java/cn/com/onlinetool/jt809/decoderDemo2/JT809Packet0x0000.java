@@ -18,6 +18,26 @@ public class JT809Packet0x0000 extends JT809BasePacket {
 
     private Number code;
 
+    private String Flight;
+
+    private String remark;
+
+    public String getFlight() {
+        return Flight;
+    }
+
+    public void setFlight(String flight) {
+        Flight = flight;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public Number getCode() {
         return code;
     }

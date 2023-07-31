@@ -11,6 +11,34 @@ public class Idc2AwsGpsVo {
 
     private Number  code;
 
+
+
+
+    private String  flight;
+
+
+    private String  remark;
+
+    public Number getLat() {
+        return Lat;
+    }
+
+    public String getFlight() {
+        return flight;
+    }
+
+    public void setFlight(String flight) {
+        this.flight = flight;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public void setLat(Number lat) {
         Lat = lat;
     }

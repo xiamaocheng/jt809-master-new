@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Properties;
 
 //import org.apache.commons.lang3.StringUtils;
+import io.netty.util.CharsetUtil;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
@@ -181,7 +182,7 @@ public class TcpClientDemo {
 //        }
 //        //报警状态
 //        buffer.writeInt(0);//0表示正常；1表示报警//4
-        ChannelBuffer headBuffer = ChannelBuffers.buffer(16);
+        ChannelBuffer headBuffer = ChannelBuffers.buffer(64);
 //        headBuffer.writeBytes(getBytesWithLengthAfter(21 , awsVo.getVehicleNo().getBytes(Charset.forName("GBK"))));//21
 //        headBuffer.writeByte((byte)InitVehicleData.vehicleColor(awsVo.getVehicleNo()));//1
 //        headBuffer.writeShort(JT809Constants.UP_EXG_MSG_REAL_LOCATION);//2
@@ -190,7 +191,12 @@ public class TcpClientDemo {
 //        msg.setMsgBody(headBuffer);
 
 //        headBuffer.writeShort((awsVo.getCode().intValue()));//2
-        headBuffer.writeBytes((awsVo.getName().getBytes()));//2
+        headBuffer.writeBytes((awsVo.getName().getBytes(CharsetUtil.UTF_8)));
+        headBuffer.writeBytes((awsVo.getFlight().getBytes(CharsetUtil.UTF_8)));
+        headBuffer.writeBytes(awsVo.getRemark().getBytes(CharsetUtil.UTF_8));
+
+
+
 
         msg.setMsgBody(headBuffer);
         return msg;
@@ -301,14 +307,20 @@ public class TcpClientDemo {
         TcpClientDemo s =  TcpClientDemo.getInstance();
         Idc2AwsGpsVo awsVo = new Idc2AwsGpsVo();
 //        awsVo.setCode(123);
-        awsVo.setName("张三");
+        awsVo.setName("张三"); //6
+        awsVo.setFlight("CHIN"); //4
+        awsVo.setRemark("航班起飞");//12
+
+
+
+
 
 
 
 //        awsVo.setSpeed(45D);
 //        awsVo.setMileage(10001D);
 //        awsVo.setVehicleNo("XXXXX");
-        s.sendMsg2Gov(awsVo);
+          s.sendMsg2Gov(awsVo);
         try {
             Thread.sleep(2*1000);
         } catch (InterruptedException e) {

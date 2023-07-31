@@ -5,6 +5,7 @@ import cn.com.onlinetool.jt809.decoderDemo.Const;
 import cn.com.onlinetool.jt809.decoderDemo.JT809Packet0x1202;
 import cn.com.onlinetool.jt809.decoderDemo.PacketDecoderUtils;
 import io.netty.buffer.ByteBuf;
+import org.jboss.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,13 +48,43 @@ public class JT809Packet0x0000Decoder {
 
         //1.解析数字
 //          msgBodyBuf.readByte();
-//        packet.setCode( msgBodyBuf.readByte());
+//       // packet.setCode( msgBodyBuf.readByte());
 //        packet.setCode(msgBodyBuf.readInt());
 
         //2.解析字符串
-        String  str = new String( msgBodyBuf.array());
-        packet.setName(str);
+       /* String  str = new String( msgBodyBuf.array());
+        packet.setName(str);*/
 
+
+
+//        String  str = new String( msgBodyBuf.readBytes(4).array());
+
+//        byte[] data = new byte[8];
+
+//        packet.setName();
+//        String  str = new String( msgBodyBuf.readBytes(data).array());
+
+        ByteBuf aa = msgBodyBuf.readBytes(6);
+//        packet.setName(convertByteBufToString(aa));
+         packet.setName(aa.toString(CharsetUtil.UTF_8));
+
+        //3.解析出航班
+        /*String  str1 = new String( msgBodyBuf.readBytes(4).array());
+        packet.setFlight(str1);*/
+//        byte[] data1 = new byte[4];
+//        packet.setFlight(msgBodyBuf.readBytes(data1).toString());
+
+        ByteBuf bb = msgBodyBuf.readBytes(4);
+        packet.setFlight(convertByteBufToString(bb));
+
+        //4.解析出remoark
+      /*  String  str12= new String(  msgBodyBuf.readBytes(8).array());
+        packet.setRemark(str12);*/
+//        byte[] data2 = new byte[8];
+//        packet.setRemark(msgBodyBuf.readBytes(data2).toString());
+
+        ByteBuf CC = msgBodyBuf.readBytes(12);
+        packet.setRemark(convertByteBufToString(CC));
 
 
 
@@ -62,7 +93,17 @@ public class JT809Packet0x0000Decoder {
     }
 
 
-
+    public String convertByteBufToString(ByteBuf buf) {
+        String str;
+        if(buf.hasArray()) { // 处理堆缓冲区
+            str = new String(buf.array(), buf.arrayOffset() + buf.readerIndex(), buf.readableBytes());
+        } else { // 处理直接缓冲区以及复合缓冲区
+            byte[] bytes = new byte[buf.readableBytes()];
+            buf.getBytes(buf.readerIndex(), bytes);
+            str = new String(bytes, 0, buf.readableBytes());
+        }
+        return str;
+    }
 
 
 }
