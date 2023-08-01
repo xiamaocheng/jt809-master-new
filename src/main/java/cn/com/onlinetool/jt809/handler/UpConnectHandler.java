@@ -72,7 +72,8 @@ public class UpConnectHandler implements CommonHandler {
             msg.getMsgHead().setMsgLength(msg.getMsgHead().getMsgLength() - msg.getMsgBody().length + body.length);
             msg.setMsgBody(body);
             ctx.write(msg);
-            channelMsgManage.addChannel(Integer.toString(testUser),ctx.channel());
+            channelMsgManage.addChannel(Integer.toString(testUser),ctx.channel());  //这里是缓存操作，由链接触发对应的缓存信息
+
 
             return;
         }

@@ -4,10 +4,7 @@ import cn.com.onlinetool.jt809.util.ByteArrayUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -36,16 +33,39 @@ public class JT809TcpClient {
 
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-//                            socketChannel.pipeline().addLast(new FixedLengthFrameDecoder(100));
 
-                            //自定义分隔符
+                            // 使用LineBasedFrameDecoder解决粘包问题，其会根据"\n"或"\r\n"对二进制数据进行拆分，封装到不同的ByteBuf实例中
+                            socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024, true, true));
+
+
+//                            socketChannel.pipeline().addLast(new FixedLengthFrameDecoder(100));
+//
+//                            //自定义分隔符
 //                            ByteBuf delimiter = Unpooled.copiedBuffer("11111".getBytes());
 //                            socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,delimiter));
-
-                            socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
+//
+//                            socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
                             socketChannel.pipeline().addLast(new Message2ByteEncoder());
                             socketChannel.pipeline().addLast(new Byte2MessageDecoder());
-                            socketChannel.pipeline().addLast(new JT809TcpClientHandler());
+//                            socketChannel.pipeline().addLast(new JT809TcpClientHandler());
+                            socketChannel.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+                                @Override
+                                public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+                                    ctx.channel().write(ByteArrayUtil.hexStr2Bytes(
+                                            "5B000000480000005210010001E24001000100000000000001E2407465737438303900312E37312E3132392E32303100000000000000000000000000000000000000004E8ED9BA5D\n"
+
+
+                                    ));
+
+                                }
+                            });
+
+
+
+
+
+
+
                         }
                     });
             ChannelFuture channelFuture = client.connect("127.0.0.1", 11111).sync();//等待连接处理
@@ -55,15 +75,15 @@ public class JT809TcpClient {
                     if(future.isSuccess()){
                         System.out.println("服务器连接已经完成，可以确保进行消息准确传输");
 //                        channelFuture.channel().write(ByteArrayUtil.hexStr2Bytes("5B000000480000005210010001E24001000100000000000001E2407465737438303900312E37312E3132392E32303100000000000000000000000000000000000000004E8ED9BA5D"));
-//                         channelFuture.channel().write(ByteArrayUtil.hexStr2Bytes("5B000000980000000012001A4799A300000000000000000000000063E5A282B2E2413838383838000000000000000000000000000212020000005A02000000002800000000000000000000000000000000000000000000490101000000010400000000030200000000343400000000000000000000000000303030303030303030303000000000303030303030303030303000000000F8535D"));
-//
-////                        try {
-////                            Thread.sleep(2*1000);
-////                        } catch (InterruptedException e) {
-////                            e.printStackTrace();
-////                        }
-////                        channelFuture.channel().write(ByteArrayUtil.hexStr2Bytes("5B000000980000000012001A4799A300000000000000000000000063E5A282B2E2413838383838000000000000000000000000000212020000005A02000000002800000000000000000000000000000000000000000000490101000000010400000000030200000000343400000000000000000000000000303030303030303030303000000000303030303030303030303000000000F8535D"));
-//
+                         channelFuture.channel().write(ByteArrayUtil.hexStr2Bytes("5B0000001A0000257A10050001E24001000100000000001C525D\n"));
+
+//                        try {
+//                            Thread.sleep(2*1000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        channelFuture.channel().write(ByteArrayUtil.hexStr2Bytes("5B000000980000000012001A4799A300000000000000000000000063E5A282B2E2413838383838000000000000000000000000000212020000005A02000000002800000000000000000000000000000000000000000000490101000000010400000000030200000000343400000000000000000000000000303030303030303030303000000000303030303030303030303000000000F8535D"));
+
 
 
                     }

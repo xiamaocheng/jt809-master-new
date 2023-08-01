@@ -1,6 +1,7 @@
 package cn.com.onlinetool.jt809.db;
 
 import cn.com.onlinetool.jt809.decoderDemo.JT809Packet0x1202;
+import cn.com.onlinetool.jt809.decoderDemo2.JT809Packet0x0000;
 import org.apache.commons.dbutils.QueryRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,17 +20,18 @@ import java.util.UUID;
 public class JT809Dao {
     private static Logger log = LoggerFactory.getLogger(JT809Dao.class);
 
-    public static int insert0x1202(JT809Packet0x1202 packet) throws SQLException {
+    public static int insert0x1202(JT809Packet0x0000 packet) throws SQLException {
         QueryRunner runner = new QueryRunner();
         Connection conn = DataSourceConnectionFactory.getDbConnection();
-        String sql = "insert into test.bus_gps(id,vehicleno,lon,lat,sendtime,cjsj,vec1,vec2,vec3,direction,altitude,alarm)values(?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into test1.bus_gps(id,name,Flight,remark)values(?,?,?,?)";
         int insert = 0;
+        int i=0;
         try {
-            insert = runner.update(conn, sql, UUID.randomUUID().toString().replace("-",""), packet.getVehicleNo().replaceAll("\u0000", ""), String.format("%.6f",packet.getLon() * 1e-6), String.format("%.6f",packet.getLat() * 1e-6),LocalDateTime.of(packet.getDate(), packet.getTime()),LocalDateTime.now(),packet.getVec1(),packet.getVec2(),packet.getVec3(),packet.getDirection(),packet.getAltitude(),packet.getAlarm());
+            insert = runner.update(conn, sql,i++,  packet.getName().replaceAll("\u0000", ""), packet.getFlight(), packet.getRemark());
         } catch (SQLException e) {
             log.info("数据存储错误：{}",e.getMessage());
         }finally {
-            conn.close();
+
         }
         return insert;
     }
